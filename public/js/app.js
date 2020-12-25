@@ -4766,11 +4766,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     genarateTableTournament: function genarateTableTournament() {
+      var _this5 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
+                response = _this5.$inertia.post("/tournaments/".concat(_this5.tournamentTeamsRegister.id, "/round"), {
+                  onSuccess: function onSuccess(res) {
+                    console.log(res);
+                  }
+                });
+
+              case 1:
               case "end":
                 return _context5.stop();
             }
@@ -4782,7 +4792,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return Object.keys(somObject).length;
     },
     updateTournamentInfo: function updateTournamentInfo(tournamentId) {
-      var _this5 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
@@ -4790,8 +4800,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context6.prev = _context6.next) {
               case 0:
                 axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("http://localhost:8000/api/tournaments/".concat(tournamentId)).then(function (response) {
-                  _this5.tournamentTeamsRegister.name = response.data.tournament.name;
-                  _this5.tournamentTeamsRegister.teams = response.data.tournament.teams.map(function (tournamentClub) {
+                  _this6.tournamentTeamsRegister.name = response.data.tournament.name;
+                  _this6.tournamentTeamsRegister.teams = response.data.tournament.teams.map(function (tournamentClub) {
                     return tournamentClub.id;
                   });
                 });
@@ -4805,6 +4815,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Tournaments/Info.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Tournaments/Info.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Layout */ "./resources/js/Layout.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Layout: _Layout__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {},
+  data: function data() {
+    return {};
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -51136,6 +51184,60 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Tournaments/Info.vue?vue&type=template&id=2e80e43c&lang=true&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Tournaments/Info.vue?vue&type=template&id=2e80e43c&lang=true& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "layout",
+    [
+      _vm.$page.flash.success
+        ? _c(
+            "div",
+            {
+              staticClass: "bg-green-200 my-6 py-4 px-4 border border-green-300"
+            },
+            [
+              _vm._v(
+                "\n        " + _vm._s(_vm.$page.flash.success) + " afdf\n    "
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.errors, function(erro, index) {
+        return _c(
+          "div",
+          {
+            key: index,
+            staticClass: "bg-red-200 my-6 py-4 px-4 border border-red-300"
+          },
+          [_vm._v("\n        " + _vm._s(erro) + "\n    ")]
+        )
+      }),
+      _vm._v("\n    Teste\n")
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -64925,7 +65027,9 @@ var map = {
 	"./Team/Index": "./resources/js/Pages/Team/Index.vue",
 	"./Team/Index.vue": "./resources/js/Pages/Team/Index.vue",
 	"./Tournaments/Index": "./resources/js/Pages/Tournaments/Index.vue",
-	"./Tournaments/Index.vue": "./resources/js/Pages/Tournaments/Index.vue"
+	"./Tournaments/Index.vue": "./resources/js/Pages/Tournaments/Index.vue",
+	"./Tournaments/Info": "./resources/js/Pages/Tournaments/Info.vue",
+	"./Tournaments/Info.vue": "./resources/js/Pages/Tournaments/Info.vue"
 };
 
 
@@ -65911,6 +66015,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_2ab0cd34_lang_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_2ab0cd34_lang_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Tournaments/Info.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/Pages/Tournaments/Info.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Info_vue_vue_type_template_id_2e80e43c_lang_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Info.vue?vue&type=template&id=2e80e43c&lang=true& */ "./resources/js/Pages/Tournaments/Info.vue?vue&type=template&id=2e80e43c&lang=true&");
+/* harmony import */ var _Info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Info.vue?vue&type=script&lang=js& */ "./resources/js/Pages/Tournaments/Info.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Info_vue_vue_type_template_id_2e80e43c_lang_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Info_vue_vue_type_template_id_2e80e43c_lang_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/Tournaments/Info.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Tournaments/Info.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/Pages/Tournaments/Info.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Info.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Tournaments/Info.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Info_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Tournaments/Info.vue?vue&type=template&id=2e80e43c&lang=true&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/Pages/Tournaments/Info.vue?vue&type=template&id=2e80e43c&lang=true& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Info_vue_vue_type_template_id_2e80e43c_lang_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Info.vue?vue&type=template&id=2e80e43c&lang=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Tournaments/Info.vue?vue&type=template&id=2e80e43c&lang=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Info_vue_vue_type_template_id_2e80e43c_lang_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Info_vue_vue_type_template_id_2e80e43c_lang_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

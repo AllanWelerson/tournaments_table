@@ -15,4 +15,9 @@ class Tournament extends Model
     {
         return $this->belongsToMany('App\Models\Team')->withTimestamps();
     }
+
+    public function rounds()
+    {
+        return $this->hasMany('App\Models\Round');
+    }
 }

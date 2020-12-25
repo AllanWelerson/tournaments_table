@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoundController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\UserController;
@@ -26,7 +27,8 @@ Route::get('/team', [TeamController::class, 'index'])->name('team.index');
 Route::post('/team', [TeamController::class, 'store']);
 Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournament.index');
 Route::post('/tournaments', [TournamentController::class, 'store'])->name('tournament.store');
-
+Route::get('/tournaments/{id}', [TournamentController::class, 'show'])->name('tournament.show');
+Route::post('/tournaments/{id}/round', [RoundController::class, 'store'])->name('tournament.round.store');
 
 Route::get('/', function () {
     return view('welcome');

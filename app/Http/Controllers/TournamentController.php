@@ -63,7 +63,7 @@ class TournamentController extends Controller
      */
     public function show($id)
     {
-        //
+        return Inertia::render('Tournaments/Info');
     }
 
     /**

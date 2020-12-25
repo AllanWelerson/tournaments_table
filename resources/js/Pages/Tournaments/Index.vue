@@ -167,7 +167,11 @@ methods: {
         }
     },
     async genarateTableTournament(){
-
+        let response = this.$inertia.post(`/tournaments/${this.tournamentTeamsRegister.id }/round`, {
+            onSuccess: (res) => {
+                console.log(res);
+            }
+        });
     },
     notEmptyObject(somObject){
         return Object.keys(somObject).length;
