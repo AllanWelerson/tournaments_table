@@ -4505,6 +4505,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Layout */ "./resources/js/Layout.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -4604,6 +4606,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -4611,8 +4632,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: {
     tournaments: Array,
-    errors: Object,
-    teams: Object
+    errors: Object
   },
   data: function data() {
     return {
@@ -4623,8 +4643,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       toggleModal: false,
       tournamentTeamsRegister: {
         id: Number,
-        teams: Array
-      }
+        teams: Array,
+        name: String
+      },
+      teams: {}
     };
   },
   methods: {
@@ -4640,12 +4662,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _this.$inertia.post('/tournaments', _this.form, {
                   onSuccess: function onSuccess(res) {
                     if (_this.$page.flash.success) {
-                      console.log('sim');
                       _this.form.name = null;
                       _this.form.edition = null;
-                    } else {
-                      console.log('nao');
-                    }
+                    } else {}
                   }
                 });
 
@@ -4658,17 +4677,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     addClubToTournament: function addClubToTournament(clubId) {
-      this.tournamentTeamsRegister.teams = [].concat(_toConsumableArray(this.tournamentTeamsRegister.teams), [clubId]);
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("http://localhost:8000/api/tournamentClubs/".concat(_this2.tournamentTeamsRegister.id), {
+                  clubId: clubId
+                }); //  .then( res => console.log(res));
+
+                _this2.tournamentTeamsRegister.teams = [].concat(_toConsumableArray(_this2.tournamentTeamsRegister.teams), [clubId]);
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
     removeClubFromTournament: function removeClubFromTournament(clubId) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]("http://localhost:8000/api/tournamentClubs/".concat(this.tournamentTeamsRegister.id, "/").concat(clubId)); //  .then( res => console.log(res));
+
       this.tournamentTeamsRegister.teams = this.tournamentTeamsRegister.teams.filter(function (id) {
         return clubId != id;
       });
     },
     openModal: function openModal(id) {
-      this.toggleModal = !this.toggleModal;
-      this.tournamentTeamsRegister.id = id;
-      this.tournamentTeamsRegister.teams = [];
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _this3.updateTableTeamsModal("http://localhost:8000/api/teams");
+
+              case 2:
+                _this3.tournamentTeamsRegister.teams = [];
+                _context3.next = 5;
+                return _this3.updateTournamentInfo(id);
+
+              case 5:
+                _this3.tournamentTeamsRegister.id = id;
+                _this3.toggleModal = !_this3.toggleModal;
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     },
     closeModal: function closeModal() {
       this.toggleModal = !this.toggleModal;
@@ -4676,17 +4739,69 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     inTeamsArrayToRegisterInTournament: function inTeamsArrayToRegisterInTournament(id) {
       return this.tournamentTeamsRegister.teams.includes(id);
     },
-    genarateTableTournament: function genarateTableTournament() {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    updateTableTeamsModal: function updateTableTeamsModal() {
+      var _arguments = arguments,
+          _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
+                url = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : null;
+
+                if (url != null) {
+                  axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (response) {
+                    _this4.teams = response.data.teams; // console.log('teams', this.teams);
+                  });
+                }
+
+              case 2:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2);
+        }, _callee4);
+      }))();
+    },
+    genarateTableTournament: function genarateTableTournament() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    notEmptyObject: function notEmptyObject(somObject) {
+      return Object.keys(somObject).length;
+    },
+    updateTournamentInfo: function updateTournamentInfo(tournamentId) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("http://localhost:8000/api/tournaments/".concat(tournamentId)).then(function (response) {
+                  _this5.tournamentTeamsRegister.name = response.data.tournament.name;
+                  _this5.tournamentTeamsRegister.teams = response.data.tournament.teams.map(function (tournamentClub) {
+                    return tournamentClub.id;
+                  });
+                });
+
+              case 1:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
       }))();
     }
   }
@@ -50607,7 +50722,7 @@ var render = function() {
                         },
                         [
                           _c("h2", { staticClass: "text-2xl" }, [
-                            _vm._v("Brasileirão")
+                            _vm._v(_vm._s(_vm.tournamentTeamsRegister.name))
                           ]),
                           _vm._v(" "),
                           _c(
@@ -50626,96 +50741,230 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c("table", {}, [
-                        _c("thead", [
-                          _c("tr", [
-                            _c(
-                              "th",
-                              {
-                                staticClass: "border-b-2 border-purple-400 py-4"
-                              },
-                              [_vm._v("Name")]
-                            ),
+                      _vm.notEmptyObject(_vm.teams)
+                        ? _c("table", {}, [
+                            _c("thead", [
+                              _c("tr", [
+                                _c(
+                                  "th",
+                                  {
+                                    staticClass:
+                                      "border-b-2 border-purple-400 py-4"
+                                  },
+                                  [_vm._v("Name")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "th",
+                                  {
+                                    staticClass:
+                                      "border-b-2 border-purple-400 py-4"
+                                  },
+                                  [_vm._v("Add/Remove")]
+                                )
+                              ])
+                            ]),
                             _vm._v(" "),
                             _c(
-                              "th",
-                              {
-                                staticClass: "border-b-2 border-purple-400 py-4"
-                              },
-                              [_vm._v("Add/Remove")]
+                              "tbody",
+                              _vm._l(_vm.teams.data, function(team) {
+                                return _c(
+                                  "tr",
+                                  {
+                                    key: team.id,
+                                    staticClass:
+                                      "border-b-2 border-purple-200 py-4"
+                                  },
+                                  [
+                                    _c(
+                                      "td",
+                                      { staticClass: "py-2 text-center" },
+                                      [_vm._v(_vm._s(team.name))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "py-2 text-center" },
+                                      [
+                                        !_vm.inTeamsArrayToRegisterInTournament(
+                                          team.id
+                                        )
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "rounded-full bg-green-500 text-white px-2 py-1",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.addClubToTournament(
+                                                      team.id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "fas fa-plus"
+                                                })
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _vm.inTeamsArrayToRegisterInTournament(
+                                          team.id
+                                        )
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "rounded-full bg-red-500 text-white px-2 py-1",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.removeClubFromTournament(
+                                                      team.id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "fas fa-trash"
+                                                })
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    )
+                                  ]
+                                )
+                              }),
+                              0
                             )
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          _vm._l(_vm.teams.data, function(team) {
-                            return _c(
-                              "tr",
-                              {
-                                key: team.id,
-                                staticClass: "border-b-2 border-purple-200 py-4"
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "flex flex-row justify-center p-6" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                " hover:outiline-none text-purple-400 py-1 px-2 m-1",
+                              class: {
+                                "bg-white border-2 border-purple-400 rounded-md":
+                                  1 != _vm.teams.current_page
                               },
-                              [
-                                _c("td", { staticClass: "py-2 text-center" }, [
-                                  _vm._v(_vm._s(team.name))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticClass: "py-2 text-center" }, [
-                                  !_vm.inTeamsArrayToRegisterInTournament(
-                                    team.id
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateTableTeamsModal(
+                                    _vm.teams.first_page_url
                                   )
-                                    ? _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "rounded-full bg-green-500 text-white px-2 py-1",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.addClubToTournament(
-                                                team.id
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fas fa-plus"
-                                          })
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm.inTeamsArrayToRegisterInTournament(
-                                    team.id
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fas fa-angle-double-left"
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "hover:outiline-none text-purple-400 py-1 px-2 m-1",
+                              class: {
+                                "bg-white border-2 border-purple-400 rounded-md":
+                                  _vm.teams.prev_page_url != null
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateTableTeamsModal(
+                                    _vm.teams.prev_page_url
                                   )
-                                    ? _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "rounded-full bg-red-500 text-white px-2 py-1",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.removeClubFromTournament(
-                                                team.id
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fas fa-trash"
-                                          })
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ])
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      ])
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-angle-left" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "hover:outiline-none text-purple-400 py-1 px-2 m-1"
+                            },
+                            [_vm._v(" " + _vm._s(_vm.teams.current_page))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "hover:outiline-none text-purple-400 py-1 px-2 m-1",
+                              class: {
+                                "bg-white border-2 border-purple-400 rounded-md":
+                                  _vm.teams.next_page_url != null
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateTableTeamsModal(
+                                    _vm.teams.next_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-chevron-right" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "hover:outiline-none text-purple-400 py-1 px-2 m-1",
+                              class: {
+                                "bg-white border-2 border-purple-400 rounded-md":
+                                  _vm.teams.last_page != _vm.teams.current_page
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateTableTeamsModal(
+                                    _vm.teams.last_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fas fa-angle-double-right"
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "flex flex-row justify-center p-6" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "bg-purple-400 hover:bg-purple-600 text-white py-2 px-4 rounded-md",
+                              on: {
+                                click: function($event) {
+                                  return _vm.genarateTableTournament()
+                                }
+                              }
+                            },
+                            [_vm._v("Gerar Tabela")]
+                          )
+                        ]
+                      )
                     ]
                   )
                 ]

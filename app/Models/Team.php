@@ -13,6 +13,6 @@ class Team extends Model
 
     public function tournaments()
     {
-        return $this->belongsToMany('App\Tournament')->withTimestamps();
+        return $this->belongsToMany('App\Models\Tournament')->withTimestamps();
     }
 }

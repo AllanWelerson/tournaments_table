@@ -11,12 +11,12 @@
             <div class="relative  min-w-full flex justify-center item-start">
                 <div class="bg-white w-full rounded shadow-2xl flex flex-col max-w-2xl py-4 px-3">
                     <div class="flex flex-row mt-1 mb-4 mr-2 items-center justify-between pb-4 ">
-                        <h2 class="text-2xl">Brasileirão</h2>
+                        <h2 class="text-2xl">{{tournamentTeamsRegister.name}}</h2>
                         <button class="rounded-full bg-purple-500 text-white px-4 py-2" @click="closeModal()">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <table class="">
+                    <table class="" v-if="notEmptyObject(teams)">
                         <thead>
                             <tr>
                                 <th class="border-b-2 border-purple-400 py-4">Name</th>
@@ -37,6 +37,24 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="flex flex-row justify-center p-6">
+                        <button @click="updateTableTeamsModal(teams.first_page_url)"
+                                v-bind:class="{ 'bg-white border-2 border-purple-400 rounded-md': 1 != teams.current_page}"
+                                class=" hover:outiline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-double-left"></i></button>
+                        <button @click="updateTableTeamsModal(teams.prev_page_url)"
+                                v-bind:class="{ 'bg-white border-2 border-purple-400 rounded-md': teams.prev_page_url != null}"
+                                class="hover:outiline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-left"></i></button>
+                        <button class="hover:outiline-none text-purple-400 py-1 px-2 m-1"> {{teams.current_page}}</button>
+                        <button @click="updateTableTeamsModal(teams.next_page_url)"
+                                v-bind:class="{ 'bg-white border-2 border-purple-400 rounded-md': teams.next_page_url != null}"
+                                class="hover:outiline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-chevron-right"></i></button>
+                        <button @click="updateTableTeamsModal(teams.last_page_url)"
+                                v-bind:class="{ 'bg-white border-2 border-purple-400 rounded-md': teams.last_page != teams.current_page}"
+                                class="hover:outiline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-double-right"></i></button>
+                    </div>
+                    <div class="flex flex-row justify-center p-6">
+                        <button class="bg-purple-400 hover:bg-purple-600 text-white py-2 px-4 rounded-md" @click="genarateTableTournament()">Gerar Tabela</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,12 +99,13 @@
 </template>
 <script>
 import Layout from "../../Layout";
+import axios from 'axios';
+
 export default {
 components: { Layout },
 props: {
     tournaments: Array,
     errors: Object,
-    teams: Object,
 },
 data: () => {
     return {
@@ -98,7 +117,9 @@ data: () => {
         tournamentTeamsRegister: {
             id: Number,
             teams: Array,
-        }
+            name: String,
+        },
+        teams: {},
     }
 },
 methods: {
@@ -106,25 +127,29 @@ methods: {
         let response = this.$inertia.post('/tournaments', this.form, {
             onSuccess: (res) => {
                 if(this.$page.flash.success){
-                    console.log('sim');
                     this.form.name = null;
                     this.form.edition = null;
                 }else{
-                    console.log('nao');
                 }
             }
         })
     },
-    addClubToTournament(clubId){
+    async addClubToTournament(clubId){
+        axios.post(`http://localhost:8000/api/tournamentClubs/${this.tournamentTeamsRegister.id}`, {clubId})
+            //  .then( res => console.log(res));
         this.tournamentTeamsRegister.teams = [...this.tournamentTeamsRegister.teams, clubId];
     },
     removeClubFromTournament(clubId){
+        axios.delete(`http://localhost:8000/api/tournamentClubs/${this.tournamentTeamsRegister.id}/${clubId}`)
+            //  .then( res => console.log(res));
         this.tournamentTeamsRegister.teams = this.tournamentTeamsRegister.teams.filter(id => clubId != id);
     },
-    openModal(id){
-        this.toggleModal = !this.toggleModal;
-        this.tournamentTeamsRegister.id = id;
+    async openModal(id){
+        await this.updateTableTeamsModal(`http://localhost:8000/api/teams`);
         this.tournamentTeamsRegister.teams = [];
+        await this.updateTournamentInfo(id);
+        this.tournamentTeamsRegister.id = id;
+        this.toggleModal = !this.toggleModal;
     },
     closeModal(){
         this.toggleModal = !this.toggleModal;
@@ -132,8 +157,30 @@ methods: {
     inTeamsArrayToRegisterInTournament(id){
         return this.tournamentTeamsRegister.teams.includes(id);
     },
+    async updateTableTeamsModal(url = null){
+        if(url != null){
+            axios.get(url)
+                .then(response => {
+                this.teams = response.data.teams;
+                // console.log('teams', this.teams);
+            });
+        }
+    },
     async genarateTableTournament(){
 
+    },
+    notEmptyObject(somObject){
+        return Object.keys(somObject).length;
+    },
+    async updateTournamentInfo(tournamentId){
+        axios.get(`http://localhost:8000/api/tournaments/${tournamentId}`)
+             .then(response => {
+                 this.tournamentTeamsRegister.name = response.data.tournament.name;
+                 this.tournamentTeamsRegister.teams = response.data.tournament.teams
+                    .map(tournamentClub => {
+                        return tournamentClub.id;
+                    });
+             });
     }
 }
 }
