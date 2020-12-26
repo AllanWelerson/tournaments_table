@@ -11,11 +11,17 @@
             <div class="relative  min-w-full flex justify-center item-start">
                 <div class="bg-white w-full rounded shadow-2xl flex flex-col max-w-2xl py-4 px-3">
                     <div class="flex flex-row mt-1 mb-4 mr-2 items-center justify-between pb-4 ">
-                        <h2 class="text-2xl">{{tournamentTeamsRegister.name}}</h2>
+                        <h2 class="text-2xl">New Tournament</h2>
                         <button class="rounded-full bg-purple-500 text-white px-4 py-2" @click="closeModal()">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
+
+                    <div class="flex mb-6">
+                        <input type="text" placeholder="Name" v-model="tournamentTeamsRegister.name" class="w-full py-2 px-4 outline-none border-b-2 border-transparent focus:border-purple-400  text-center transition duration-500 ease-in-out">
+                        <input type="text" placeholder="Edition" v-model="tournamentTeamsRegister.edition" class="w-full py-2 px-4 outline-none ml-4 border-b-2 border-transparent focus:border-purple-400  text-center transition duration-500 ease-in-out">
+                    </div>
+
                     <table class="" v-if="notEmptyObject(teams)">
                         <thead>
                             <tr>
@@ -35,22 +41,25 @@
                                     </button>
                                 </td>
                             </tr>
+                            <tr v-if="!teams.data.length">
+                                <td colspan="2" class="py-6 text-center">There are no registered teams</td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="flex flex-row justify-center p-6">
                         <button @click="updateTableTeamsModal(teams.first_page_url)"
                                 v-bind:class="{ 'bg-white border-2 border-purple-400 rounded-md': 1 != teams.current_page}"
-                                class=" hover:outiline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-double-left"></i></button>
+                                class=" focues:outline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-double-left"></i></button>
                         <button @click="updateTableTeamsModal(teams.prev_page_url)"
                                 v-bind:class="{ 'bg-white border-2 border-purple-400 rounded-md': teams.prev_page_url != null}"
-                                class="hover:outiline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-left"></i></button>
-                        <button class="hover:outiline-none text-purple-400 py-1 px-2 m-1"> {{teams.current_page}}</button>
+                                class="focues:outline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-left"></i></button>
+                        <button class="focues:outline-none text-purple-400 py-1 px-2 m-1"> {{teams.current_page}}</button>
                         <button @click="updateTableTeamsModal(teams.next_page_url)"
                                 v-bind:class="{ 'bg-white border-2 border-purple-400 rounded-md': teams.next_page_url != null}"
-                                class="hover:outiline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-chevron-right"></i></button>
+                                class="focues:outline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-chevron-right"></i></button>
                         <button @click="updateTableTeamsModal(teams.last_page_url)"
                                 v-bind:class="{ 'bg-white border-2 border-purple-400 rounded-md': teams.last_page != teams.current_page}"
-                                class="hover:outiline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-double-right"></i></button>
+                                class="focues:outline-none text-purple-400 py-1 px-2 m-1"><i class="fas fa-angle-double-right"></i></button>
                     </div>
                     <div class="flex flex-row justify-center p-6">
                         <button class="bg-purple-400 hover:bg-purple-600 text-white py-2 px-4 rounded-md" @click="genarateTableTournament()">Gerar Tabela</button>
@@ -61,11 +70,9 @@
         <div v-if="toggleModal"
              class="fixed z-40 inset-0 opacity-25 bg-black">
         </div>
-        <form @submit.prevent="handleForm" class="flex">
-            <input type="text" placeholder="Name" v-model="form.name" class="w-full py-2 px-4 outline-none">
-            <input type="text" placeholder="Edition" v-model="form.edition" class="w-full py-2 px-4 outline-none ml-4">
-            <button type="submit" class="flex-shirink-0 ml-4 bg-purple-700 text-white py-2 px-4 hover:bg-purple-800">Save</button>
-        </form>
+        <div class="flex flex-row justify-end">
+            <button @click="openModal()" type="submit" class="flex-shirink-0 ml-4 bg-purple-700 text-white py-2 px-4 hover:bg-purple-800">New Tournament</button>
+        </div>
         <table class="border border-purple-300 min-w-full mt-10">
             <thead>
                 <tr class="bg-purple-400 text-white">
@@ -87,11 +94,15 @@
                         {{tournament.edition}}
                     </td>
                     <td class="py-4">
-                        <button class="cursor-pointer rounded-full bg-purple-400 hover:bg-purple-600 text-white px-5 py-3 hover:transform hover:scale-125 outline-none active:outline-none focus:outline-none"
-                                @click="openModal(tournament.id)">
+                        <inertia-link v-bind:href="'/tournaments/' + tournament.id"
+                                class="cursor-pointer rounded-full bg-purple-400 hover:bg-purple-600 text-white px-5 py-3 hover:transform hover:scale-125 outline-none active:outline-none focus:outline-none"
+                                title="">
                             <i class="fas fa-info"></i>
-                        </button>
+                        </inertia-link>
                     </td>
+                </tr>
+                <tr v-if="!tournaments.length">
+                    <td colspan="4" class="py-6 text-center">There are no registered tournaments</td>
                 </tr>
             </tbody>
         </table>
@@ -116,8 +127,9 @@ data: () => {
         toggleModal: false,
         tournamentTeamsRegister: {
             id: Number,
-            teams: Array,
-            name: String,
+            teams: [],
+            name: '',
+            edition: '',
         },
         teams: {},
     }
@@ -135,19 +147,13 @@ methods: {
         })
     },
     async addClubToTournament(clubId){
-        axios.post(`http://localhost:8000/api/tournamentClubs/${this.tournamentTeamsRegister.id}`, {clubId})
-            //  .then( res => console.log(res));
         this.tournamentTeamsRegister.teams = [...this.tournamentTeamsRegister.teams, clubId];
     },
     removeClubFromTournament(clubId){
-        axios.delete(`http://localhost:8000/api/tournamentClubs/${this.tournamentTeamsRegister.id}/${clubId}`)
-            //  .then( res => console.log(res));
         this.tournamentTeamsRegister.teams = this.tournamentTeamsRegister.teams.filter(id => clubId != id);
     },
     async openModal(id){
         await this.updateTableTeamsModal(`http://localhost:8000/api/teams`);
-        this.tournamentTeamsRegister.teams = [];
-        await this.updateTournamentInfo(id);
         this.tournamentTeamsRegister.id = id;
         this.toggleModal = !this.toggleModal;
     },
@@ -162,12 +168,11 @@ methods: {
             axios.get(url)
                 .then(response => {
                 this.teams = response.data.teams;
-                // console.log('teams', this.teams);
             });
         }
     },
     async genarateTableTournament(){
-        let response = this.$inertia.post(`/tournaments/${this.tournamentTeamsRegister.id }/round`, {
+        let response = this.$inertia.post(`/tournaments/`, this.tournamentTeamsRegister, {
             onSuccess: (res) => {
                 console.log(res);
             }
@@ -176,16 +181,6 @@ methods: {
     notEmptyObject(somObject){
         return Object.keys(somObject).length;
     },
-    async updateTournamentInfo(tournamentId){
-        axios.get(`http://localhost:8000/api/tournaments/${tournamentId}`)
-             .then(response => {
-                 this.tournamentTeamsRegister.name = response.data.tournament.name;
-                 this.tournamentTeamsRegister.teams = response.data.tournament.teams
-                    .map(tournamentClub => {
-                        return tournamentClub.id;
-                    });
-             });
-    }
 }
 }
 </script>

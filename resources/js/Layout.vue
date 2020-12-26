@@ -1,7 +1,7 @@
 <template lang="">
     <div>
         <div class="grid gri-cols-1 bg-indigo-100 bg-purple-700 text-white px-2 py-4 text-center text-2xl font-semibold font-mono">
-            Tabelas
+            Tables
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-12 md:min-h-screen">
             <div class="bg-purple-400 xl:col-span-2">

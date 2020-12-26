@@ -26,6 +26,9 @@
                         {{team.name}}
                     </td>
                 </tr>
+                <tr v-if="!teams.length">
+                    <td colspan="2" class="py-6 text-center">There are no registered teams</td>
+                </tr>
             </tbody>
         </table>
     </layout>

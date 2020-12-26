@@ -22,6 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/teams', [TeamController::class, 'index']);
-Route::post('/tournamentClubs/{tournamentId}', [TournamentClubs::class, 'store']);
-Route::delete('/tournamentClubs/{tournamentId}/{clubId}', [TournamentClubs::class, 'destroy']);
 Route::get('/tournaments/{id}', [TournamentController::class, 'show']);

@@ -48,7 +48,6 @@ class TeamController extends Controller
         $request = [];
 
         return Redirect::back()->with('success','Successful created');
-        // return Redirect::route('team.index')->with('success','Successful created');
     }
 
     /**

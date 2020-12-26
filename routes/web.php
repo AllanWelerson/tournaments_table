@@ -24,11 +24,10 @@ Route::get('/register', [UserController::class,'index']);
 Route::post('/register', [UserController::class,'store']);
 
 Route::get('/team', [TeamController::class, 'index'])->name('team.index');
-Route::post('/team', [TeamController::class, 'store']);
+Route::post('/team', [TeamController::class, 'store'])->name('team.store');
 Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournament.index');
 Route::post('/tournaments', [TournamentController::class, 'store'])->name('tournament.store');
 Route::get('/tournaments/{id}', [TournamentController::class, 'show'])->name('tournament.show');
-Route::post('/tournaments/{id}/round', [RoundController::class, 'store'])->name('tournament.round.store');
 
 Route::get('/', function () {
     return view('welcome');
