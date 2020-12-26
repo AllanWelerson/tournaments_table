@@ -123,8 +123,9 @@ class TournamentController extends Controller
      */
     public function show($id)
     {
-        $tournament = Tournament::where('id', $id)->first();
+        $tournament = Tournament::with('teams')->where('id', $id)->first();
         $rounds = Round::with(['matches','matches.team1','matches.team2'])->where('tournament_id', $id)->get();
+
 
         return Inertia::render('Tournaments/Info', [
             'tournament' => $tournament,

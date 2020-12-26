@@ -135,17 +135,6 @@ data: () => {
     }
 },
 methods: {
-    async handleForm(){
-        let response = this.$inertia.post('/tournaments', this.form, {
-            onSuccess: (res) => {
-                if(this.$page.flash.success){
-                    this.form.name = null;
-                    this.form.edition = null;
-                }else{
-                }
-            }
-        })
-    },
     async addClubToTournament(clubId){
         this.tournamentTeamsRegister.teams = [...this.tournamentTeamsRegister.teams, clubId];
     },
@@ -153,7 +142,7 @@ methods: {
         this.tournamentTeamsRegister.teams = this.tournamentTeamsRegister.teams.filter(id => clubId != id);
     },
     async openModal(id){
-        await this.updateTableTeamsModal(`http://localhost:8000/api/teams`);
+        await this.updateTableTeamsModal(route('teams.index.ajax').url());
         this.tournamentTeamsRegister.id = id;
         this.toggleModal = !this.toggleModal;
     },
@@ -172,7 +161,7 @@ methods: {
         }
     },
     async genarateTableTournament(){
-        let response = this.$inertia.post(`/tournaments/`, this.tournamentTeamsRegister, {
+        let response = this.$inertia.post(route('tournament.store').url(), this.tournamentTeamsRegister, {
             onSuccess: (res) => {
                 console.log(res);
             }

@@ -2862,7 +2862,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    isCurrentURL: function isCurrentURL(urlName) {
+      return route().current(urlName);
+    },
+    logout: function logout() {
+      axios.post(route('logout').url()).then(function (response) {
+        window.location = '/';
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -3453,32 +3472,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/About.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/About.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Layout */ "./resources/js/Layout.vue");
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Layout: _Layout__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Dashboard.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Dashboard.vue?vue&type=script&lang=js& ***!
@@ -3514,38 +3507,6 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
     Welcome: _Jetstream_Welcome__WEBPACK_IMPORTED_MODULE_1__["default"]
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Home.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Home.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Layout */ "./resources/js/Layout.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Layout: _Layout__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: {
-    user: String
   }
 });
 
@@ -4361,8 +4322,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -4665,23 +4624,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    handleForm: function handleForm() {
+    addClubToTournament: function addClubToTournament(clubId) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                response = _this.$inertia.post('/tournaments', _this.form, {
-                  onSuccess: function onSuccess(res) {
-                    if (_this.$page.flash.success) {
-                      _this.form.name = null;
-                      _this.form.edition = null;
-                    } else {}
-                  }
-                });
+                _this.tournamentTeamsRegister.teams = [].concat(_toConsumableArray(_this.tournamentTeamsRegister.teams), [clubId]);
 
               case 1:
               case "end":
@@ -4691,7 +4642,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    addClubToTournament: function addClubToTournament(clubId) {
+    removeClubFromTournament: function removeClubFromTournament(clubId) {
+      this.tournamentTeamsRegister.teams = this.tournamentTeamsRegister.teams.filter(function (id) {
+        return clubId != id;
+      });
+    },
+    openModal: function openModal(id) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -4699,42 +4655,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.tournamentTeamsRegister.teams = [].concat(_toConsumableArray(_this2.tournamentTeamsRegister.teams), [clubId]);
+                _context2.next = 2;
+                return _this2.updateTableTeamsModal(route('teams.index.ajax').url());
 
-              case 1:
+              case 2:
+                _this2.tournamentTeamsRegister.id = id;
+                _this2.toggleModal = !_this2.toggleModal;
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
-      }))();
-    },
-    removeClubFromTournament: function removeClubFromTournament(clubId) {
-      this.tournamentTeamsRegister.teams = this.tournamentTeamsRegister.teams.filter(function (id) {
-        return clubId != id;
-      });
-    },
-    openModal: function openModal(id) {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return _this3.updateTableTeamsModal("http://localhost:8000/api/teams");
-
-              case 2:
-                _this3.tournamentTeamsRegister.id = id;
-                _this3.toggleModal = !_this3.toggleModal;
-
-              case 4:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
       }))();
     },
     closeModal: function closeModal() {
@@ -4745,40 +4678,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     updateTableTeamsModal: function updateTableTeamsModal() {
       var _arguments = arguments,
-          _this4 = this;
+          _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var url;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 url = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : null;
 
                 if (url != null) {
                   axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (response) {
-                    _this4.teams = response.data.teams;
+                    _this3.teams = response.data.teams;
                   });
                 }
 
               case 2:
               case "end":
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4);
+        }, _callee3);
       }))();
     },
     genarateTableTournament: function genarateTableTournament() {
-      var _this5 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                response = _this5.$inertia.post("/tournaments/", _this5.tournamentTeamsRegister, {
+                response = _this4.$inertia.post(route('tournament.store').url(), _this4.tournamentTeamsRegister, {
                   onSuccess: function onSuccess(res) {
                     console.log(res);
                   }
@@ -4786,10 +4719,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context5.stop();
+                return _context4.stop();
             }
           }
-        }, _callee5);
+        }, _callee4);
       }))();
     },
     notEmptyObject: function notEmptyObject(somObject) {
@@ -4812,6 +4745,51 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Layout */ "./resources/js/Layout.vue");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4872,7 +4850,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      currentRoundIndex: 0
+      currentRoundIndex: 0,
+      table: []
     };
   },
   computed: {
@@ -4880,9 +4859,12 @@ __webpack_require__.r(__webpack_exports__);
       return this.rounds[this.currentRoundIndex].matches;
     }
   },
+  mounted: function mounted() {
+    this.updateTable();
+  },
   methods: {
     nextRound: function nextRound() {
-      console.log(this.rounds.length);
+      this.updateTable();
 
       if (this.rounds.length > this.currentRoundIndex + 1) {
         this.currentRoundIndex = this.currentRoundIndex + 1;
@@ -4892,6 +4874,101 @@ __webpack_require__.r(__webpack_exports__);
       if (this.currentRoundIndex - 1 >= 0) {
         this.currentRoundIndex = this.currentRoundIndex - 1;
       }
+    },
+    initializeTable: function initializeTable() {
+      var _this = this;
+
+      this.table = [];
+      this.tournament.teams.forEach(function (team) {
+        _this.table = [].concat(_toConsumableArray(_this.table), [{
+          won: 0,
+          goals_for: 0,
+          goals_against: 0,
+          drawn: 0,
+          lost: 0,
+          played: 0,
+          name: team.name,
+          id: team.id
+        }]);
+      });
+    },
+    updateTable: function updateTable() {
+      var _this2 = this;
+
+      this.initializeTable();
+      this.rounds.forEach(function (round) {
+        round.matches.forEach(function (match) {
+          if (Number.isInteger(parseInt(match.goals_team_1)) && Number.isInteger(parseInt(match.goals_team_2))) {
+            _this2.assignResultToTable(match.team_1_id, match.goals_team_1, match.goals_team_2);
+
+            _this2.assignResultToTable(match.team_2_id, match.goals_team_2, match.goals_team_1);
+          }
+        });
+      }); // map and update table
+
+      this.table = this.table.map(function (team) {
+        team.points = _this2.calculatePoints(team.won, team.drawn);
+        team.goals_difference = team.goals_for - team.goals_against;
+        return team;
+      }).sort(function (team1, team2) {
+        if (team1.points > team2.points) {
+          return -1;
+        } else if (team1.points < team2.points) {
+          return 1;
+        }
+
+        if (team1.goals_difference > team2.goals_difference) {
+          return -1;
+        } else if (team1.goals_difference < team2.goals_difference) {
+          return 1;
+        }
+
+        if (team1.goals_for > team2.goals_for) {
+          return -1;
+        } else if (team1.goals_for < team2.goals_for) {
+          return 1;
+        }
+
+        if (team1.name.toLowerCase() > team2.name.toLowerCase()) {
+          // console.log(`${team1.name} - ${team2.name}`);
+          return 1;
+        } else if (team1.name < team2.name) {
+          // console.log(`${team2.name} - ${team1.name}`);
+          return -1;
+        }
+
+        return 0;
+      });
+    },
+    calculatePoints: function calculatePoints(won, drawn) {
+      return won * 3 + drawn;
+    },
+    assignResultToTable: function assignResultToTable(team_id, goals_for, goals_against) {
+      var won = 0;
+      var drawn = 0;
+      var lost = 0;
+      var played = 1;
+
+      if (goals_for === goals_against) {
+        drawn = 1;
+      } else if (goals_for > goals_against) {
+        won = 1;
+      } else {
+        lost = 1;
+      }
+
+      this.table = this.table.map(function (team) {
+        if (team.id === team_id) {
+          team.goals_for = parseInt(team.goals_for) + parseInt(goals_for);
+          team.goals_against = parseInt(team.goals_against) + parseInt(goals_against);
+          team.won = parseInt(team.won) + parseInt(won);
+          team.drawn = parseInt(team.drawn) + parseInt(drawn);
+          team.lost = parseInt(team.lost) + parseInt(lost);
+          team.played = parseInt(team.played) + parseInt(played);
+        }
+
+        return team;
+      });
     }
   }
 });
@@ -47621,30 +47698,16 @@ var render = function() {
             _c("ul", { staticClass: "flex flex-row md:flex-col text-white" }, [
               _c(
                 "li",
-                { staticClass: "py-1 px-2 text-purple-700" },
-                [
-                  _c(
-                    "inertia-link",
-                    {
-                      staticClass:
-                        "text-gray-300 hover:bg-purple-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium",
-                      attrs: { href: "/home" }
-                    },
-                    [_vm._v("Home")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
                 { staticClass: "py-1 px-2" },
                 [
                   _c(
                     "inertia-link",
                     {
                       staticClass:
-                        "text-gray-300 hover:bg-purple-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium",
+                        "text-gray-300 hover:bg-purple-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium",
+                      class: _vm.isCurrentURL("team.index")
+                        ? "bg-purple-500"
+                        : "",
                       attrs: { href: "/team" }
                     },
                     [_vm._v("Teams")]
@@ -47661,14 +47724,41 @@ var render = function() {
                     "inertia-link",
                     {
                       staticClass:
-                        "text-gray-300 hover:bg-purple-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium",
+                        "text-gray-300 hover:bg-purple-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium",
+                      class: _vm.isCurrentURL("tournament.index")
+                        ? "bg-purple-500"
+                        : "",
                       attrs: { href: "/tournaments" }
                     },
                     [_vm._v("Tournaments")]
                   )
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _c("li", { staticClass: "py-1 px-2" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.logout($event)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "text-gray-300 hover:bg-purple-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                      },
+                      [_vm._v("Logout")]
+                    )
+                  ]
+                )
+              ])
             ])
           ])
         ]),
@@ -49074,32 +49164,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/About.vue?vue&type=template&id=169e1534&lang=true&":
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/About.vue?vue&type=template&id=169e1534&lang=true& ***!
-  \*************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("layout", [
-    _c("div", [_vm._v("\n        blz estou na sobre\n    ")])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Dashboard.vue?vue&type=template&id=097ba13b&":
 /*!*******************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Dashboard.vue?vue&type=template&id=097ba13b& ***!
@@ -49151,44 +49215,6 @@ var render = function() {
       ])
     ]
   )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Home.vue?vue&type=template&id=6a63e488&lang=true&":
-/*!************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Home.vue?vue&type=template&id=6a63e488&lang=true& ***!
-  \************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("layout", [
-    _c("div", { staticClass: "bg-gray-100" }, [
-      _vm._v(
-        "\n        Olá eu sou " + _vm._s(_vm.user) + " na home no vuejs\n    "
-      )
-    ]),
-    _vm._v(" "),
-    _vm.$page.flash.success
-      ? _c(
-          "div",
-          { staticStyle: { border: "1px solid green", "margin-top": "10px" } },
-          [_vm._v("\n        " + _vm._s(_vm.$page.flash.success) + "\n    ")]
-        )
-      : _vm._e()
-  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50488,100 +50514,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("layout", [
-    _c(
-      "div",
-      { staticClass: "container mx-auto" },
-      [
-        _vm._l(_vm.errors, function(erro, index) {
-          return _c(
-            "div",
-            { key: index, staticStyle: { border: "1px solid red" } },
-            [_vm._v("\n            " + _vm._s(erro) + "\n        ")]
-          )
-        }),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
+  return _c(
+    "div",
+    { staticClass: "container mx-auto" },
+    [
+      _vm._l(_vm.errors, function(erro, index) {
+        return _c(
+          "div",
+          { key: index, staticStyle: { border: "1px solid red" } },
+          [_vm._v("\n        " + _vm._s(erro) + "\n    ")]
+        )
+      }),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.handleForm($event)
+            }
+          }
+        },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.name,
+                expression: "form.name"
+              }
+            ],
+            attrs: { type: "text", placeholder: "nome" },
+            domProps: { value: _vm.form.name },
             on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.handleForm($event)
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "name", $event.target.value)
               }
             }
-          },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.name,
-                  expression: "form.name"
-                }
-              ],
-              attrs: { type: "text", placeholder: "nome" },
-              domProps: { value: _vm.form.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "name", $event.target.value)
-                }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.email,
+                expression: "form.email"
               }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.email,
-                  expression: "form.email"
+            ],
+            attrs: { type: "email", placeholder: "email" },
+            domProps: { value: _vm.form.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
                 }
-              ],
-              attrs: { type: "email", placeholder: "email" },
-              domProps: { value: _vm.form.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "email", $event.target.value)
-                }
+                _vm.$set(_vm.form, "email", $event.target.value)
               }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.password,
-                  expression: "form.password"
-                }
-              ],
-              attrs: { type: "password", placeholder: "password" },
-              domProps: { value: _vm.form.password },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "password", $event.target.value)
-                }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.password,
+                expression: "form.password"
               }
-            }),
-            _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [_vm._v("Cadastrar")])
-          ]
-        )
-      ],
-      2
-    )
-  ])
+            ],
+            attrs: { type: "password", placeholder: "password" },
+            domProps: { value: _vm.form.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "password", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("button", { attrs: { type: "submit" } }, [_vm._v("Cadastrar")])
+        ]
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -51333,6 +51357,140 @@ var render = function() {
         _vm._v(" "),
         _c("table", { staticClass: "border-t-2 border-gray-300 mb-8 mt-4" }, [
           _c("thead", [
+            _c("tr", { staticClass: "text-center" }, [
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("Position")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("Team")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("Points")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("Played")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("Won")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("Drawn")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("Lost")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("GF")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("GA")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
+                [_vm._v("GD")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.table, function(team, index) {
+              return _c("tr", { key: team.id, staticClass: "text-center" }, [
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(index + 1))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(team.name))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(_vm.calculatePoints(team.won, team.drawn)))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(team.played))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(team.won))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(team.drawn))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(team.lost))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(team.goals_for))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(team.goals_against))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
+                  [_vm._v(_vm._s(team.goals_for - team.goals_against))]
+                )
+              ])
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "border-t-2 border-gray-300 mb-8 mt-4" }, [
+          _c("thead", [
             _c("tr", [
               _c(
                 "td",
@@ -51349,7 +51507,7 @@ var render = function() {
           _c(
             "tbody",
             [
-              _vm._l(_vm.matchesOfCurrentRound, function(match) {
+              _vm._l(_vm.matchesOfCurrentRound, function(match, index) {
                 return _c("tr", { key: match.id }, [
                   _c(
                     "td",
@@ -51360,7 +51518,43 @@ var render = function() {
                   _c(
                     "td",
                     { staticClass: "border-b-2 border-gray-300 py-8 px-10" },
-                    [_vm._v(_vm._s(match.goals_team_1))]
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value:
+                              _vm.rounds[_vm.currentRoundIndex].matches[index]
+                                .goals_team_1,
+                            expression:
+                              "rounds[currentRoundIndex].matches[index].goals_team_1"
+                          }
+                        ],
+                        staticClass: "w-8 py-2 text-center rounded-md",
+                        attrs: { type: "text" },
+                        domProps: {
+                          value:
+                            _vm.rounds[_vm.currentRoundIndex].matches[index]
+                              .goals_team_1
+                        },
+                        on: {
+                          keyup: function($event) {
+                            return _vm.updateTable()
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.rounds[_vm.currentRoundIndex].matches[index],
+                              "goals_team_1",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -51375,7 +51569,43 @@ var render = function() {
                   _c(
                     "td",
                     { staticClass: "border-b-2 border-gray-300 py-8 px-10" },
-                    [_vm._v(_vm._s(match.goals_team_2))]
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value:
+                              _vm.rounds[_vm.currentRoundIndex].matches[index]
+                                .goals_team_2,
+                            expression:
+                              "rounds[currentRoundIndex].matches[index].goals_team_2"
+                          }
+                        ],
+                        staticClass: "w-8 py-2 text-center rounded-md",
+                        attrs: { type: "text" },
+                        domProps: {
+                          value:
+                            _vm.rounds[_vm.currentRoundIndex].matches[index]
+                              .goals_team_2
+                        },
+                        on: {
+                          keyup: function($event) {
+                            return _vm.updateTable()
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.rounds[_vm.currentRoundIndex].matches[index],
+                              "goals_team_2",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -65220,12 +65450,8 @@ var map = {
 	"./API/ApiTokenManager.vue": "./resources/js/Pages/API/ApiTokenManager.vue",
 	"./API/Index": "./resources/js/Pages/API/Index.vue",
 	"./API/Index.vue": "./resources/js/Pages/API/Index.vue",
-	"./About": "./resources/js/Pages/About.vue",
-	"./About.vue": "./resources/js/Pages/About.vue",
 	"./Dashboard": "./resources/js/Pages/Dashboard.vue",
 	"./Dashboard.vue": "./resources/js/Pages/Dashboard.vue",
-	"./Home": "./resources/js/Pages/Home.vue",
-	"./Home.vue": "./resources/js/Pages/Home.vue",
 	"./Profile/DeleteUserForm": "./resources/js/Pages/Profile/DeleteUserForm.vue",
 	"./Profile/DeleteUserForm.vue": "./resources/js/Pages/Profile/DeleteUserForm.vue",
 	"./Profile/LogoutOtherBrowserSessionsForm": "./resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue",
@@ -65408,75 +65634,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/Pages/About.vue":
-/*!**************************************!*\
-  !*** ./resources/js/Pages/About.vue ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _About_vue_vue_type_template_id_169e1534_lang_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./About.vue?vue&type=template&id=169e1534&lang=true& */ "./resources/js/Pages/About.vue?vue&type=template&id=169e1534&lang=true&");
-/* harmony import */ var _About_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./About.vue?vue&type=script&lang=js& */ "./resources/js/Pages/About.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _About_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _About_vue_vue_type_template_id_169e1534_lang_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _About_vue_vue_type_template_id_169e1534_lang_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/Pages/About.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/Pages/About.vue?vue&type=script&lang=js&":
-/*!***************************************************************!*\
-  !*** ./resources/js/Pages/About.vue?vue&type=script&lang=js& ***!
-  \***************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_About_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./About.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/About.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_About_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/Pages/About.vue?vue&type=template&id=169e1534&lang=true&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/Pages/About.vue?vue&type=template&id=169e1534&lang=true& ***!
-  \*******************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_About_vue_vue_type_template_id_169e1534_lang_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./About.vue?vue&type=template&id=169e1534&lang=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/About.vue?vue&type=template&id=169e1534&lang=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_About_vue_vue_type_template_id_169e1534_lang_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_About_vue_vue_type_template_id_169e1534_lang_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/Pages/Dashboard.vue":
 /*!******************************************!*\
   !*** ./resources/js/Pages/Dashboard.vue ***!
@@ -65541,75 +65698,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_097ba13b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_097ba13b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/Pages/Home.vue":
-/*!*************************************!*\
-  !*** ./resources/js/Pages/Home.vue ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Home_vue_vue_type_template_id_6a63e488_lang_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home.vue?vue&type=template&id=6a63e488&lang=true& */ "./resources/js/Pages/Home.vue?vue&type=template&id=6a63e488&lang=true&");
-/* harmony import */ var _Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home.vue?vue&type=script&lang=js& */ "./resources/js/Pages/Home.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Home_vue_vue_type_template_id_6a63e488_lang_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Home_vue_vue_type_template_id_6a63e488_lang_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/Pages/Home.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/Pages/Home.vue?vue&type=script&lang=js&":
-/*!**************************************************************!*\
-  !*** ./resources/js/Pages/Home.vue?vue&type=script&lang=js& ***!
-  \**************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Home.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Home.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/Pages/Home.vue?vue&type=template&id=6a63e488&lang=true&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/Pages/Home.vue?vue&type=template&id=6a63e488&lang=true& ***!
-  \******************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_6a63e488_lang_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Home.vue?vue&type=template&id=6a63e488&lang=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Home.vue?vue&type=template&id=6a63e488&lang=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_6a63e488_lang_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_6a63e488_lang_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

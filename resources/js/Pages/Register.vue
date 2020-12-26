@@ -1,17 +1,15 @@
 <template lang="">
-    <layout>
-        <div class="container mx-auto">
-            <div v-for="(erro, index) in errors" :key="index" style="border: 1px solid red;">
-                {{erro}}
-            </div>
-           <form @submit.prevent="handleForm">
-                <input type="text" placeholder="nome" v-model="form.name">
-                <input type="email"  placeholder="email" v-model="form.email">
-                <input type="password"  placeholder="password" v-model="form.password">
-                <button type="submit">Cadastrar</button>
-           </form>
+    <div class="container mx-auto">
+        <div v-for="(erro, index) in errors" :key="index" style="border: 1px solid red;">
+            {{erro}}
         </div>
-    </layout>
+        <form @submit.prevent="handleForm">
+            <input type="text" placeholder="nome" v-model="form.name">
+            <input type="email"  placeholder="email" v-model="form.email">
+            <input type="password"  placeholder="password" v-model="form.password">
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
 </template>
 <script>
 import Layout from "../Layout";

@@ -18,21 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home', [HomeController::class,'index'])->name('home');
-Route::get('/about', [HomeController::class,'about']);
-Route::get('/register', [UserController::class,'index']);
-Route::post('/register', [UserController::class,'store']);
+// Route::get('/register', [UserController::class,'index']);
+// Route::post('/register', [UserController::class,'store']);
 
-Route::get('/team', [TeamController::class, 'index'])->name('team.index');
-Route::post('/team', [TeamController::class, 'store'])->name('team.store');
-Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournament.index');
-Route::post('/tournaments', [TournamentController::class, 'store'])->name('tournament.store');
-Route::get('/tournaments/{id}', [TournamentController::class, 'show'])->name('tournament.show');
-
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth:sanctum','verified'])->group(function(){
+    Route::get('/', function () { return response()->redirectToRoute('tournament.index');});
+    Route::get('/team', [TeamController::class, 'index'])->name('team.index');
+    Route::post('/team', [TeamController::class, 'store'])->name('team.store');
+    Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournament.index');
+    Route::post('/tournaments', [TournamentController::class, 'store'])->name('tournament.store');
+    Route::get('/tournaments/{id}', [TournamentController::class, 'show'])->name('tournament.show');
+    Route::get('/teams', [\App\Http\Controllers\Api\TeamController::class, 'index'])->name('teams.index.ajax');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia\Inertia::render('Dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return Inertia\Inertia::render('Dashboard');
+// })->name('dashboard');

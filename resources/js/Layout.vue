@@ -7,9 +7,17 @@
             <div class="bg-purple-400 xl:col-span-2">
                 <nav class="mx-4 my-4 md:my-6">
                 <ul class="flex flex-row md:flex-col text-white">
-                    <li class="py-1 px-2 text-purple-700"><inertia-link class="text-gray-300 hover:bg-purple-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" href="/home">Home</inertia-link></li>
-                    <li class="py-1 px-2"><inertia-link class="text-gray-300 hover:bg-purple-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" href="/team">Teams</inertia-link></li>
-                    <li class="py-1 px-2"><inertia-link class="text-gray-300 hover:bg-purple-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" href="/tournaments">Tournaments</inertia-link></li>
+                    <li class="py-1 px-2">
+                        <inertia-link v-bind:class="(isCurrentURL('team.index')) ? 'bg-purple-500' : ''"
+                                      class="text-gray-300 hover:bg-purple-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium" href="/team">Teams</inertia-link></li>
+                    <li class="py-1 px-2">
+                        <inertia-link v-bind:class="(isCurrentURL('tournament.index')) ? 'bg-purple-500' : ''"
+                                      class="text-gray-300 hover:bg-purple-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium" href="/tournaments">Tournaments</inertia-link></li>
+                    <li class="py-1 px-2">
+                        <form @submit.prevent="logout">
+                            <button class="text-gray-300 hover:bg-purple-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Logout</button>
+                        </form>
+                    </li>
                 </ul>
                 </nav>
             </div>
@@ -22,7 +30,18 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+methods:{
+    isCurrentURL(urlName){
+        return route().current(urlName);
+    },
+    logout(){
+        axios.post(route('logout').url()).then(response => {
+            window.location = '/';
+        })
+    }
+}
+};
 </script>
 <style lang="">
 </style>
