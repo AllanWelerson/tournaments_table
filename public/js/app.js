@@ -47676,12 +47676,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", {}, [
     _c(
       "div",
       {
         staticClass:
-          "grid gri-cols-1 bg-indigo-100 bg-purple-700 text-white px-2 py-4 text-center text-2xl font-semibold font-mono"
+          "w-full grid gri-cols-1 bg-indigo-100 bg-purple-700 text-white px-2 py-4 text-center text-2xl font-semibold font-mono"
       },
       [_vm._v("\n        Tables\n    ")]
     ),
@@ -47693,7 +47693,7 @@ var render = function() {
           "grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-12 md:min-h-screen"
       },
       [
-        _c("div", { staticClass: "bg-purple-400 xl:col-span-2" }, [
+        _c("div", { staticClass: "bg-purple-400 xl:col-span-2 h-full" }, [
           _c("nav", { staticClass: "mx-4 my-4 md:my-6" }, [
             _c("ul", { staticClass: "flex flex-row md:flex-col text-white" }, [
               _c(
@@ -47767,7 +47767,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "bg-gray-200 col-span-3 lg:col-span-4 xl:col-span-10 min-h-screen"
+              "bg-gray-200 col-span-3 lg:col-span-4 xl:col-span-10 min-h-screen overflow-x-scroll"
           },
           [_c("div", { staticClass: "m-5" }, [_vm._t("default")], 2)]
         )
@@ -51348,331 +51348,354 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "flex flex-col justify-center items-center" }, [
-        _c("h1", { staticClass: "p-6 text-2xl capitalize" }, [
-          _vm._v(
-            _vm._s(_vm.tournament.name) + " - " + _vm._s(_vm.tournament.edition)
-          )
-        ]),
-        _vm._v(" "),
-        _c("table", { staticClass: "border-t-2 border-gray-300 mb-8 mt-4" }, [
-          _c("thead", [
-            _c("tr", { staticClass: "text-center" }, [
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("Position")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("Team")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("Points")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("Played")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("Won")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("Drawn")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("Lost")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("GF")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("GA")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                { staticClass: "border-b-4 border-gray-300 py-8 px-2" },
-                [_vm._v("GD")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
+      _c("h1", { staticClass: "p-6 text-2xl text-center capitalize" }, [
+        _vm._v(
+          _vm._s(_vm.tournament.name) + " - " + _vm._s(_vm.tournament.edition)
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "flex flex-col xl:flex-row justify-center xl:items-start  max-w-full"
+        },
+        [
           _c(
-            "tbody",
-            _vm._l(_vm.table, function(team, index) {
-              return _c("tr", { key: team.id, staticClass: "text-center" }, [
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(index + 1))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(team.name))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(_vm.calculatePoints(team.won, team.drawn)))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(team.played))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(team.won))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(team.drawn))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(team.lost))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(team.goals_for))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(team.goals_against))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "border-b-2 border-gray-300 py-8 px-2" },
-                  [_vm._v(_vm._s(team.goals_for - team.goals_against))]
-                )
-              ])
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c("table", { staticClass: "border-t-2 border-gray-300 mb-8 mt-4" }, [
-          _c("thead", [
-            _c("tr", [
-              _c(
-                "td",
-                {
-                  staticClass:
-                    "border-b-4 border-gray-300 py-4 px-10 text-center",
-                  attrs: { colspan: "5" }
-                },
-                [_vm._v("Matches")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
+            "table",
+            { staticClass: "border-t-2 border-gray-300 mb-8 mt-4 xl:mr-6" },
             [
-              _vm._l(_vm.matchesOfCurrentRound, function(match, index) {
-                return _c("tr", { key: match.id }, [
+              _c("thead", [
+                _c("tr", { staticClass: "text-center" }, [
                   _c(
-                    "td",
-                    { staticClass: "border-b-2 border-gray-300 py-8 px-10" },
-                    [_vm._v(_vm._s(match.team1.name))]
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("Position")]
                   ),
                   _vm._v(" "),
                   _c(
-                    "td",
-                    { staticClass: "border-b-2 border-gray-300 py-8 px-10" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value:
-                              _vm.rounds[_vm.currentRoundIndex].matches[index]
-                                .goals_team_1,
-                            expression:
-                              "rounds[currentRoundIndex].matches[index].goals_team_1"
-                          }
-                        ],
-                        staticClass: "w-8 py-2 text-center rounded-md",
-                        attrs: { type: "text" },
-                        domProps: {
-                          value:
-                            _vm.rounds[_vm.currentRoundIndex].matches[index]
-                              .goals_team_1
-                        },
-                        on: {
-                          keyup: function($event) {
-                            return _vm.updateTable()
-                          },
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.rounds[_vm.currentRoundIndex].matches[index],
-                              "goals_team_1",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("Team")]
                   ),
                   _vm._v(" "),
                   _c(
-                    "td",
-                    {
-                      staticClass:
-                        "border-b-2 border-gray-300 py-8 px-10 text-gray-400"
-                    },
-                    [_vm._v("x")]
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("Points")]
                   ),
                   _vm._v(" "),
                   _c(
-                    "td",
-                    { staticClass: "border-b-2 border-gray-300 py-8 px-10" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value:
-                              _vm.rounds[_vm.currentRoundIndex].matches[index]
-                                .goals_team_2,
-                            expression:
-                              "rounds[currentRoundIndex].matches[index].goals_team_2"
-                          }
-                        ],
-                        staticClass: "w-8 py-2 text-center rounded-md",
-                        attrs: { type: "text" },
-                        domProps: {
-                          value:
-                            _vm.rounds[_vm.currentRoundIndex].matches[index]
-                              .goals_team_2
-                        },
-                        on: {
-                          keyup: function($event) {
-                            return _vm.updateTable()
-                          },
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.rounds[_vm.currentRoundIndex].matches[index],
-                              "goals_team_2",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("Played")]
                   ),
                   _vm._v(" "),
                   _c(
-                    "td",
-                    { staticClass: "border-b-2 border-gray-300 py-8 px-10" },
-                    [_vm._v(_vm._s(match.team2.name))]
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("Won")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("Drawn")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("Lost")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("GF")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("GA")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    { staticClass: "border-b-4 border-gray-300 py-6 px-2" },
+                    [_vm._v("GD")]
                   )
                 ])
-              }),
+              ]),
               _vm._v(" "),
               _c(
-                "tr",
-                { staticClass: "border-b-4 border-gray-300 mb-8 mt-4" },
-                [
-                  _c("td", { staticClass: "text-center py-8" }, [
+                "tbody",
+                _vm._l(_vm.table, function(team, index) {
+                  return _c(
+                    "tr",
+                    { key: team.id, staticClass: "text-center" },
+                    [
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(index + 1))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(team.name))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.calculatePoints(team.won, team.drawn))
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(team.played))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(team.won))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(team.drawn))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(team.lost))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(team.goals_for))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(team.goals_against))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border-b-2 border-gray-300 py-6 px-2" },
+                        [_vm._v(_vm._s(team.goals_for - team.goals_against))]
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("table", { staticClass: "border-t-2 border-gray-300 mb-8 mt-4" }, [
+            _c("thead", [
+              _c("tr", [
+                _c(
+                  "td",
+                  {
+                    staticClass:
+                      "border-b-4 border-gray-300 py-6 px-4 text-center",
+                    attrs: { colspan: "5" }
+                  },
+                  [_vm._v("Matches")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              [
+                _vm._l(_vm.matchesOfCurrentRound, function(match, index) {
+                  return _c("tr", { key: match.id }, [
                     _c(
-                      "button",
-                      {
-                        staticClass: "focus:outline-none py-4 px-6",
-                        class:
-                          _vm.currentRoundIndex > 0
-                            ? "hover:text-purple-600"
-                            : "text-gray-400 cursor-default",
-                        on: {
-                          click: function($event) {
-                            return _vm.prevRound()
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fas fa-chevron-left" })]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
-                      staticClass: "text-center py-8",
-                      attrs: { colspan: "3" }
-                    },
-                    [_vm._v("Round " + _vm._s(_vm.currentRoundIndex + 1))]
-                  ),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-center py-8" }, [
+                      "td",
+                      { staticClass: "border-b-2 border-gray-300 py-5 px-4" },
+                      [_vm._v(_vm._s(match.team1.name))]
+                    ),
+                    _vm._v(" "),
                     _c(
-                      "button",
-                      {
-                        staticClass: "focus:outline-none py-4 px-6",
-                        class:
-                          _vm.rounds.length > _vm.currentRoundIndex + 1
-                            ? "hover:text-purple-600"
-                            : "text-gray-400 cursor-default",
-                        on: {
-                          click: function($event) {
-                            return _vm.nextRound()
+                      "td",
+                      { staticClass: "border-b-2 border-gray-300 py-5 px-4" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value:
+                                _vm.rounds[_vm.currentRoundIndex].matches[index]
+                                  .goals_team_1,
+                              expression:
+                                "rounds[currentRoundIndex].matches[index].goals_team_1"
+                            }
+                          ],
+                          staticClass: "w-8 py-1 text-center rounded-md",
+                          attrs: { type: "text" },
+                          domProps: {
+                            value:
+                              _vm.rounds[_vm.currentRoundIndex].matches[index]
+                                .goals_team_1
+                          },
+                          on: {
+                            keyup: function($event) {
+                              return _vm.updateTable()
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.rounds[_vm.currentRoundIndex].matches[
+                                  index
+                                ],
+                                "goals_team_1",
+                                $event.target.value
+                              )
+                            }
                           }
-                        }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass:
+                          "border-b-2 border-gray-300 py-5 px-4 text-gray-400"
                       },
-                      [_c("i", { staticClass: "fas fa-chevron-right" })]
+                      [_vm._v("x")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "border-b-2 border-gray-300 py-5 px-4" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value:
+                                _vm.rounds[_vm.currentRoundIndex].matches[index]
+                                  .goals_team_2,
+                              expression:
+                                "rounds[currentRoundIndex].matches[index].goals_team_2"
+                            }
+                          ],
+                          staticClass: "w-8 py-1 text-center rounded-md",
+                          attrs: { type: "text" },
+                          domProps: {
+                            value:
+                              _vm.rounds[_vm.currentRoundIndex].matches[index]
+                                .goals_team_2
+                          },
+                          on: {
+                            keyup: function($event) {
+                              return _vm.updateTable()
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.rounds[_vm.currentRoundIndex].matches[
+                                  index
+                                ],
+                                "goals_team_2",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "border-b-2 border-gray-300 py-5 px-4" },
+                      [_vm._v(_vm._s(match.team2.name))]
                     )
                   ])
-                ]
-              )
-            ],
-            2
-          )
-        ])
-      ])
+                }),
+                _vm._v(" "),
+                _c(
+                  "tr",
+                  { staticClass: "border-b-4 border-gray-300 mb-8 mt-4" },
+                  [
+                    _c("td", { staticClass: "text-center py-5" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "focus:outline-none py-2 px-4",
+                          class:
+                            _vm.currentRoundIndex > 0
+                              ? "hover:text-purple-600"
+                              : "text-gray-400 cursor-default",
+                          on: {
+                            click: function($event) {
+                              return _vm.prevRound()
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-chevron-left" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "text-center py-5",
+                        attrs: { colspan: "3" }
+                      },
+                      [_vm._v("Round " + _vm._s(_vm.currentRoundIndex + 1))]
+                    ),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center py-5" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "focus:outline-none py-2 px-4",
+                          class:
+                            _vm.rounds.length > _vm.currentRoundIndex + 1
+                              ? "hover:text-purple-600"
+                              : "text-gray-400 cursor-default",
+                          on: {
+                            click: function($event) {
+                              return _vm.nextRound()
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-chevron-right" })]
+                      )
+                    ])
+                  ]
+                )
+              ],
+              2
+            )
+          ])
+        ]
+      )
     ],
     2
   )
