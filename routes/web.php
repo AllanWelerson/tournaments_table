@@ -5,6 +5,7 @@ use App\Http\Controllers\RoundController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +19,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/register', [UserController::class,'index']);
-// Route::post('/register', [UserController::class,'store']);
-
 Route::middleware(['auth:sanctum','verified'])->group(function(){
     Route::get('/', function () { return response()->redirectToRoute('tournament.index');});
     Route::get('/team', [TeamController::class, 'index'])->name('team.index');
@@ -30,7 +28,3 @@ Route::middleware(['auth:sanctum','verified'])->group(function(){
     Route::get('/tournaments/{id}', [TournamentController::class, 'show'])->name('tournament.show');
     Route::get('/teams', [\App\Http\Controllers\Api\TeamController::class, 'index'])->name('teams.index.ajax');
 });
-
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//     return Inertia\Inertia::render('Dashboard');
-// })->name('dashboard');
