@@ -23,7 +23,7 @@ add('writable_dirs', []);
 // Hosts
 
 host('root@212.1.214.119')
-    ->set('deploy_path', '~/data/www/');
+    ->set('deploy_path', '/data/www/');
 
 // Tasks
 

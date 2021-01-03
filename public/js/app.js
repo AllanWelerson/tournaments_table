@@ -47683,7 +47683,7 @@ var render = function() {
         staticClass:
           "w-full grid gri-cols-1 bg-indigo-100 bg-purple-700 text-white px-2 py-4 text-center text-2xl font-semibold font-mono"
       },
-      [_vm._v("\n        Tables\n    ")]
+      [_vm._v("\n        App Tournaments Tables\n    ")]
     ),
     _vm._v(" "),
     _c(
